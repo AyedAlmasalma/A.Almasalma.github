@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="images/logo.png">
+  <title>DNG Decoder</title>
+  <link rel="stylesheet" href="baseStyle.css">
+
+  <script>
+    var translations = {
+      "en": {
+        "digitalNegativeTitle": "Digital Negative (DNG)",
+        "basicsTitle": "<u>Basics</u>",
+        "basicsDescription": "The DNG (Digital Negative) RAW file format is a TIFF file format standard developed by Adobe. It is used by various digital cameras to store raw sensor data. The DNG format preserves the unprocessed sensor data, providing higher quality and precision (typically 12 or 14 bits per color) compared to lossy JPEG compression. This high-quality data is essential for post-processing and maintaining image integrity.",
+        "structureTitle": "<u>Structure</u>",
+        "structureDescription": "The basic structure of a DNG file contains a TIFF header, a file is defined to be a sequence of 8-bit bytes, where the bytes are numbered from 0 to N. The largest possible TIFF file is 2**32 bytes in length. A TIFF file begins with an 8-byte image file header that points to an image file directory (IFD). An image file directory contains information about the image, as well as pointers to the actual image data.",
+        "dngFileOrganization": "The DNG format is based on the TIFF/EP (Tagged Image File Format/Electronic Photography) standard, which is an extension of the widely-used TIFF format. So DNG contains a TIFF file begins with an 8-byte image file header, the most important information in these headers can be found in the first 2 bytes in the TIFF header, which either have the value 4949.H or 4D4D.H which respectively mean that the file is using either little endian or a big endian byte order.",
+        "Information": "The DNG file may have multiple IFDs, each serving a specific purpose. For example, IFD#0 typically contains the primary image data, and subsequent IFDs may contain metadata, thumbnails, and other relevant information.",
+        "multipleIFDs": "The DNG file may have multiple IFDs, each serving a specific purpose. For example, IFD#0 typically contains the primary image data, and subsequent IFDs may contain metadata, thumbnails, and other relevant information.",
+        "comprehensiveExplanation": "For a comprehensive explanation of the DNG format and TIFF specification, you can refer to the Adobe DNG Specification and TIFF specification, check out <a href= https://www.kronometric.org/phot/processing/DNG/dng_spec_1.4.0.0.pdf> Digital Negative (DNG) Specification</a> and <a href= https://www.itu.int/itudoc/itu-t/com16/tiff-fx/docs/tiff6.pdf> TIFF 6.0 Specification </a> in this project, we will focus on the aspects most relevant to our objectives and the user's understanding. In this project, we will focus on the aspects most relevant to our objectives and the user understanding.",
+        "nextButton": "Next",
+        "header": {
+          "Home": "Home",
+          "Dng": "DNG",
+          "Intro": "Intro",
+          "IFDs": "IFDs",
+          "Tutorial": "Tutorial",
+          "About": "About",
+          "Language": "Language",
+          "english": "english",
+          "german": "german"
+        },
+      },
+      "de": {
+        "digitalNegativeTitle": "Digitales Negativ (DNG)",
+        "basicsTitle": "Grundlagen",
+        "basicsDescription": "Das DNG (Digital Negative) RAW-Dateiformat ist ein von Adobe entwickelter Standard für das TIFF-Dateiformat. Es wird von verschiedenen digitalen Kameras verwendet, um Rohdaten vom Sensor zu speichern. Das DNG-Format bewahrt die nicht verarbeiteten Sensordaten und bietet eine höhere Qualität und Präzision (typischerweise 12 oder 14 Bits pro Farbe) im Vergleich zur verlustbehafteten JPEG-Kompression. Diese hochwertigen Daten sind entscheidend für die Nachbearbeitung und die Aufrechterhaltung der Bildintegrität.",
+        "structureTitle": "<u>Struktur</u>",
+        "structureDescription": "Die Grundstruktur einer DNG-Datei enthält einen TIFF-Header. Eine Datei wird als eine Sequenz von 8-Bit-Bytes definiert, wobei die Bytes von 0 bis N nummeriert sind. Die größtmögliche TIFF-Datei hat eine Länge von 2**32 Bytes. Eine TIFF-Datei beginnt mit einem 8-Byte-Bilddateikopf, der auf ein Bilddateiverzeichnis (IFD) verweist. Ein Bilddateiverzeichnis enthält Informationen über das Bild sowie Verweise auf die tatsächlichen Bilddaten.",
+        "dngFileOrganization": "Das DNG-Format basiert auf dem TIFF/EP (Tagged Image File Format/Electronic Photography) Standard, einer Erweiterung des weit verbreiteten TIFF-Formats. Daher enthält DNG eine TIFF-Datei, die mit einem 8-Byte-Bilddateikopf beginnt. Die wichtigsten Informationen in diesen Headern befinden sich in den ersten 2 Bytes des TIFF-Headers, die den Wert 4949.H oder 4D4D.H haben. Diese Werte bedeuten jeweils, dass die Datei die little endian oder big endian Byte-Reihenfolge verwendet.",
+        "Information": "Die DNG-Datei kann mehrere IFDs haben, von denen jedes einen bestimmten Zweck erfüllt. Zum Beispiel enthält IFD#0 in der Regel die Hauptbilddaten, und nachfolgende IFDs können Metadaten, Miniaturansichten und andere relevante Informationen enthalten.",
+        "multipleIFDs": "Die DNG-Datei kann mehrere IFDs haben, von denen jeder einen bestimmten Zweck erfüllt. IFD#0 enthält beispielsweise in der Regel die primären Bilddaten, und nachfolgende IFDs können Metadaten, Miniaturansichten und andere relevante Informationen enthalten.",
+        "comprehensiveExplanation": "Für eine umfassende Erklärung des DNG-Formats und der TIFF-Spezifikation können Sie auf die Adobe DNG-Spezifikation und die TIFF-Spezifikation verweisen. Schauen Sie sich die <a href= https://www.kronometric.org/phot/processing/DNG/dng_spec_1.4.0.0.pdf> Digital Negative (DNG) Specification</a> und <a href= https://www.itu.int/itudoc/itu-t/com16/tiff-fx/docs/tiff6.pdf> TIFF 6.0 Specification </a> dieses Projekts an. In diesem Projekt werden wir uns auf die für unsere Ziele und das Verständnis des Benutzers relevantesten Aspekte konzentrieren.",
+        "nextButton": "Weiter",
+        "header": {
+          "Home": "Startseite",
+          "Dng": "DNG",
+          "Intro": "Einführung",
+          "IFDs": "IFDs",
+          "Tutorial": "Tutorial",
+          "About": "Über uns",
+          "Language": "Sprache",
+          "english": "englisch",
+          "german": "Deutsch"
+        },
+      }
+    };
+
+    function changeLanguage(lang) {
+
+      document.getElementById("digitalNegativeTitle").textContent = translations[lang]["digitalNegativeTitle"];
+      document.getElementById("basicsTitle").innerHTML = translations[lang]["basicsTitle"];
+      document.getElementById("basicsDescription").textContent = translations[lang]["basicsDescription"];
+      document.getElementById("structureTitle").innerHTML = translations[lang]["structureTitle"];
+      document.getElementById("structureDescription").textContent = translations[lang]["structureDescription"];
+      document.getElementById("dngFileOrganization").textContent = translations[lang]["dngFileOrganization"];
+      document.getElementById("Information").textContent = translations[lang]["Information"];
+      document.getElementById("multipleIFDs").textContent = translations[lang]["multipleIFDs"];
+      document.getElementById("comprehensiveExplanation").textContent = translations[lang]["comprehensiveExplanation"];
+      document.getElementById("nextButton").textContent = translations[lang]["nextButton"];
+
+      // Update header content
+      var headerElements = document.querySelectorAll('[data-lang]');
+      headerElements.forEach(function (element) {
+        var key = element.getAttribute('data-lang');
+        var translation = translations[lang]["header"][key];
+        if (translation) {
+          element.textContent = translation;
+        }
+      });
+    }
+  </script>
+</head>
+
+<body>
+  <div class="header">
+    <a href="../index.html" data-lang="Home">Home</a>
+    <div class="dropdown">
+      <a href="Dng.html" data-lang="DNG">DNG</a>
+      <div class="dropdownContent">
+        <a href="Dng.html" data-lang="Intro">Introdution</a>
+        <a href="ifds.html" data-lang="IFDs">IFDs</a>
+      </div>
+    </div>
+    <a href="tutorial.html" data-lang="Tutorial">Tutorial</a>
+    <a href="About.html" data-lang="About">About</a>
+    <div class="dropdown">
+      <a href="dng.html" data-lang="Language">Language</a>
+      <div class="dropdownContent">
+        <a href="#" onclick="changeLanguage('en')" data-lang="english">english</a>
+        <a href="#" onclick="changeLanguage('de')" data-lang="german">deutsch</a>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="textContent">
+    <h1 id="digitalNegativeTitle">Digital Negative (DNG)</h1>
+    <h3><u id="basicsTitle">Basics</u></h3>
+    <p id="basicsDescription">The DNG (Digital Negative) RAW file format is a TIFF file format standard developed by Adobe. 
+      It is used by various digital cameras to store raw sensor data. The DNG format preserves the unprocessed sensor data, providing higher quality and precision (typically 12 or 14 bits per color) compared to lossy JPEG compression. 
+      This high-quality data is essential for post-processing and maintaining image integrity.</p>
+
+    <h3 id="structureTitle"><u>Structure</u></h3>
+    <p id="structureDescription">The basic structure of a DNG file contains a TIFF header, a file is defined to be a sequence of 8-bit bytes, where the bytes are numbered from 0 to N. 
+      The largest possible TIFF file is 2**32 bytes in length.
+      A TIFF file begins with an 8-byte image file header that points to an image file directory (IFD). 
+      An image file directory contains information about the image, as well as pointers to the actual image data.</p>
+      <img style="width:40%" src="images/Aufbau TIFF Datei.png">
+    <br>
+    <p id="dngFileOrganization">The DNG format is based on the TIFF/EP (Tagged Image File Format/Electronic Photography) standard, which is an extension of the widely-used TIFF format. 
+      So DNG contains a TIFF file begins with an 8-byte image file header, the most important information in these headers can be found in the first 2 bytes in the TIFF header, 
+      which either have the value 4949.H or 4D4D.H which respectively mean that the file is using either little endian or a big endian byte order. </p>
+    <br>
+    <p id="Information">The DNG file may have multiple IFDs, each serving a specific purpose. 
+      For example, IFD#0 typically contains the primary image data, and subsequent IFDs may contain metadata, 
+      thumbnails, and other relevant information.</p>
+    
+    <p id="comprehensiveExplanation">For a comprehensive explanation of the DNG format and TIFF specification, you can refer to the Adobe DNG Specification and TIFF specification, check out <a href="https://www.kronometric.org/phot/processing/DNG/dng_spec_1.4.0.0.pdf"> Digital Negative (DNG) 
+      Specification</a> and <a href="https://www.itu.int/itudoc/itu-t/com16/tiff-fx/docs/tiff6.pdf"> TIFF 6.0 Specification </a> in this project, we will focus on the aspects most relevant to our objectives and the user's understanding.
+    </p>
+
+    <div class="navButtonsContainer">
+      <a href="ifds.html" class="navButtonNext" id="nextButton">Next</a>
+    </div>
+  </div>
+
+  </div>
+</body>
+
+</html>

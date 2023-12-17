@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/logo.png">
+    <title>DNG Decoder</title>
+    <link rel="stylesheet" href="baseStyle.css">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>DNG Decoder</title>
+        <link rel="stylesheet" href="baseStyle.css">
+
+        <script>
+            var translations = {
+                "en": {
+                    "howToUseDecoder": "How to use the Decoder",
+                    "decoderUsage": "In order to use the decoder all that is need a modern web browser and a DNG file. After the file has been uploaded the file is presented to the user. On the left there will be some general information about the file, in the middle there will be a picture from the file. Beneath the picture there are tow aditional buttons, one for downloading the JPEG, one for downloading the metadata. In order to start download the Metadata, the button Download Metadata should be clicked. Once the download is complete, the metadata for the DNG file will be displayed in the text editor. ",
+                    "header": {
+                        "Home": "Home",
+                        "Dng": "DNG",
+                        "Intro": "Intro",
+                        "IFDs": "IFDs",
+                        "Tutorial": "Tutorial",
+                        "About": "About",
+                        "Language": "Language",
+                        "english": "english",
+                        "german": "german"
+                    },
+                },
+                "de": {
+                    "howToUseDecoder": "Wie man den Decoder benutzt",
+                    "decoderUsage": "Um den Decoder zu verwenden, benötigen Sie lediglich einen modernen Webbrowser und eine DNG-Datei. Nachdem die Datei hochgeladen wurde, wird sie dem Benutzer präsentiert. Auf der linken Seite befinden sich einige allgemeine Informationen zur Datei, in der Mitte gibt es ein Bild aus der Datei. Unterhalb des Bildes befinden sich zwei zusätzliche Schaltflächen, eine zum Herunterladen des JPEGs und eine zum Herunterladen der Metadaten. Um den Download der Metadaten zu starten, sollte die Schaltfläche Metadaten herunterladen angeklickt werden. Sobald der Download abgeschlossen ist, werden die Metadaten für die DNG-Datei im Texteditor angezeigt.",
+                    "header": {
+                        "Home": "Startseite",
+                        "Dng": "DNG",
+                        "Intro": "Einführung",
+                        "IFDs": "IFDs",
+                        "Tutorial": "Tutorial",
+                        "About": "Über uns",
+                        "Language": "Sprache",
+                        "english": "englisch",
+                        "german": "deutsch"
+                    },
+                }
+            };
+
+            function changeLanguage(lang) {
+                document.getElementById("howToUseDecoder").textContent = translations[lang]["howToUseDecoder"];
+                document.getElementById("decoderUsage").textContent = translations[lang]["decoderUsage"];
+            
+                // Update header content
+                var headerElements = document.querySelectorAll('[data-lang]');
+                headerElements.forEach(function (element) {
+                    var key = element.getAttribute('data-lang');
+                    var translation = translations[lang]["header"][key];
+                    if (translation) {
+                        element.textContent = translation;
+                    }
+                });
+            }
+        </script>
+
+    </head>
+
+<body>
+    <div class="header">
+        <a href="../index.html" data-lang="Home">Home</a>
+        <div class="dropdown">
+            <a href="Dng.html" data-lang="DNG">DNG</a>
+            <div class="dropdownContent">
+                <a href="Dng.html" data-lang="Intro">Introdution</a>
+                <a href="ifds.html" data-lang="IFDs">IFDs</a>
+            </div>
+        </div>
+        <a href="tutorial.html" data-lang="Tutorial">Tutorial</a>
+        <a href="About.html" data-lang="About">About</a>
+        <div class="dropdown">
+            <a href="dng.html" data-lang="Language">Language</a>
+            <div class="dropdownContent">
+                <a href="#" onclick="changeLanguage('en')" data-lang="english">english</a>
+                <a href="#" onclick="changeLanguage('de')" data-lang="german">deutsch</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="textContent">
+        <h2 id="howToUseDecoder">How to use the Decoder</h2>
+        <p id="decoderUsage">In order to use the decoder all that is need a modern web browser and a DNG file. 
+            After the file has been uploaded the file is presented to the user. 
+            On the left there will be some general information about the file, in the middle there will be a picture from the file. 
+            Beneath the picture there are tow aditional buttons, one for downloading the JPEG, one for downloading the metadata. 
+            In order to start download the Metadata, the button "Download Metadata" should be clicked. 
+            Once the download is complete, the metadata for the DNG file will be displayed in the text editor. </p>
+        <br><br><br>
+
+    </div>
+</body>
+
+</html>

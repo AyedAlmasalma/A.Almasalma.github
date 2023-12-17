@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/logo.png">
+    <title>DNG Decoder</title>
+    <link rel="stylesheet" href="baseStyle.css">
+
+    <script>
+        var translations = {
+            "en": {
+                "ifdTitle": "Image File Directories (IFDs)",
+                "ifdStructureTitle": "<u>IFD Structure</u>",
+                "ifdStructureDescription": "All Image File Directories follow the same basic structure, of a 2-byte count of the number of directory entries (i.e., the number of fields), followed by a sequence of 12-byte field entries, followed by a 4-byte offset of the next IFD (or 0 if none).<br> Each 12-byte IFD entry has the following format:",
+                "tagEntry": "0-1 Bytes: The Tag that identifies the field.",
+                "typeEntry": "2-3 Bytes: The field Type.",
+                "valueCountEntry": "4-7 Bytes: The number of values, Count of the indicated Type.",
+                "valueEntry": "8-11 Bytes: The Value Offset, the file offset (in bytes) of the Value for the field.",
+                "ifd0Title": "IFD #0 Data",
+                "ifd0Description": "In the first IFD of a DNG file, metadata information about the digital image captured by the camera is included. The metadata comprises various tags that relate to the image. These tags represent only a portion of the metadata that can exist in the first IFD of a DNG file. The specific tags and their values can vary depending on the camera and the settings used during the capture. The DNG format is designed to be extensible, accommodating a wide range of metadata information from different cameras. However, IFD #0 not only contains data about the associated image but also the EXIF (Exchangeable image file format) Sub-IFD and the MakerNote Sub-IFD. The EXIF-Sub-IFD includes additional information about the camera and the image according to the EXIF specification, such as exposure time (0x829a) and light intensity (0x829d). An entry in the EXIF-Sub-IFD also points to the offset of the MakerNote Sub-IFD. MakerNote is a manufacturer-specific part of the EXIF standard that gives manufacturers the freedom to store arbitrary data. It is important to note that DNG itself generally does not contain manufacturer-specific MakerNote data. The MakerNote is a section in the EXIF metadata that allows camera manufacturers to insert additional, camera-related information. As DNG is conceived as a universal format, it typically excludes manufacturer-specific MakerNote data. Instead, DNG aims to capture essential image data in a standardized form. DNG uses the MakerNoteSafety tag to verify whether it is safe to retain the MakerNote tag along with the rest of the EXIF data.",
+                "prevButton": "Previous",
+                "nextButton": "Next",
+                "header": {
+                    "Home": "Home",
+                    "Dng": "DNG",
+                    "Intro": "Intro",
+                    "IFDs": "IFDs",
+                    "Tutorial": "Tutorial",
+                    "About": "About",
+                    "Language": "Language",
+                    "english": "english",
+                    "german": "german"
+                },
+            },
+            "de": {
+                "ifdTitle": "Bilddateiverzeichnisse (IFDs)",
+                "ifdStructureTitle": "<u>IFD-Struktur</u>",
+                "ifdStructureDescription": "Alle Bilddateiverzeichnisse folgen der gleichen Grundstruktur. Diese besteht aus einer 2-Byte-Zählung der Anzahl der Verzeichniseinträge (d.h. der Anzahl der Felder), gefolgt von einer Sequenz von 12-Byte-Feldeinträgen und anschließend einem 4-Byte-Offset des nächsten IFD (oder 0, wenn keines vorhanden ist).<br>Jeder 12-Byte-IFD-Eintrag hat das folgende Format:",
+                "tagEntry": "0-1 Bytes: Das Tag, das Feld identifiziert.",
+                "typeEntry": "2-3 Bytes: Der Feldtyp.",
+                "valueCountEntry": "4-7 Bytes: Die Anzahl der Werte, die Anzahl des angegebenen Typs.",
+                "valueEntry": "8-11 Bytes: Der Wertoffset, der Dateioffset (in Bytes) des Werts für das Feld.",
+                "ifd0Title": "IFD Nr. 0 Daten",
+                "ifd0Description": "Im ersten IFD sind Metadateninformationen über das digitale Bild, das von der Kamera aufgenommen wurde enthalten. Die Metadaten umfassen verschiedene Tags, die sich auf das Bild beziehen. Diese Tags repräsentieren nur einen Teil der Metadaten, die im ersten IFD einer DNG-Datei vorhanden sein können. Die spezifischen Tags und ihre Werte können je nach Kamera und den bei der Aufnahme verwendeten Einstellungen variieren. Das DNG-Format ist darauf ausgelegt, erweiterbar zu sein und eine Vielzahl von Metadateninformationen von verschiedenen Kameras aufnehmen zu können. IFD #0 enthält jedoch nicht nur Daten zum zugehörigen Bild, sondern auch das EXIF-Sub-IFD und das MakerNote-Sub-IFD. Das EXIF-Sub-IFD enthält zusätzliche Informationen zur Kamera und zum Bild gemäß der EXIF-Spezifikation, wie beispielsweise Belichtungszeit (0x829a) und Lichtintensität (0x829d). Ein Eintrag im EXIFF-Sub-IFD zeigt auch auf den Offset des MakerNote-Sub-IFD. MakerNote ist ein herstellerspezifischer Teil des EXIF-Standards, der Herstellern die Freiheit gibt, beliebige Daten zu speichern. Es ist jedoch wichtig zu beachten, dass DNG selbst in der Regel keine herstellerspezifischen Makernote-Daten enthält. Das MakerNote ist ein Abschnitt in den EXIF-Metadaten, der es Kameraherstellern ermöglicht, zusätzliche, kamerabezogene Informationen einzufügen. Da DNG als universelles Format konzipiert ist, schließt es in der Regel herstellerspezifische MakerNote-Daten aus. Stattdessen zielt DNG darauf ab, wesentliche Bilddaten in einer standardisierten Form zu erfassen. DNG verwendet das MakerNoteSafety Tag, um zu überprüfen, ob es sicher ist, das MakerNote  Tag zusammen mit den übrigen EXIF-Daten aufzubewahren.",
+                "prevButton": "Vorherige",
+                "nextButton": "Weiter",
+                "header": {
+                    "Home": "Startseite",
+                    "Dng": "DNG",
+                    "Intro": "Einführung",
+                    "IFDs": "IFDs",
+                    "Tutorial": "Tutorial",
+                    "About": "Über uns",
+                    "Language": "Sprache",
+                    "english": "englisch",
+                    "german": "deutsch"
+                },
+            },
+        };
+
+        function changeLanguage(lang) {
+            document.getElementById("ifdTitle").textContent = translations[lang]["ifdTitle"];
+            document.getElementById("ifdStructureTitle").innerHTML = translations[lang]["ifdStructureTitle"];
+            document.getElementById("ifdStructureDescription").innerHTML = translations[lang]["ifdStructureDescription"];
+            document.getElementById("tagEntry").textContent = translations[lang]["tagEntry"];
+            document.getElementById("typeEntry").textContent = translations[lang]["typeEntry"];
+            document.getElementById("valueCountEntry").textContent = translations[lang]["valueCountEntry"];
+            document.getElementById("valueEntry").textContent = translations[lang]["valueEntry"];
+            document.getElementById("ifd0Title").textContent = translations[lang]["ifd0Title"];
+            document.getElementById("ifd0Description").innerHTML = translations[lang]["ifd0Description"];
+            document.getElementById("prevButton").textContent = translations[lang]["prevButton"];
+            document.getElementById("nextButton").textContent = translations[lang]["nextButton"];
+            // Update header content
+            var headerElements = document.querySelectorAll('[data-lang]');
+            headerElements.forEach(function (element) {
+                var key = element.getAttribute('data-lang');
+                var translation = translations[lang]["header"][key];
+                if (translation) {
+                    element.textContent = translation;
+                }
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div class="header">
+        <a href="../index.html" data-lang="Home">Home</a>
+        <div class="dropdown">
+            <a href="Dng.html" data-lang="DNG">DNG</a>
+            <div class="dropdownContent">
+                <a href="Dng.html" data-lang="Intro">Introdution</a>
+                <a href="ifds.html" data-lang="IFDs">IFDs</a>
+            </div>
+        </div>
+        <a href="tutorial.html" data-lang="Tutorial">Tutorial</a>
+        <a href="About.html" data-lang="About">About</a>
+        <div class="dropdown">
+            <a href="dng.html" data-lang="Language">Language</a>
+            <div class="dropdownContent">
+                <a href="#" onclick="changeLanguage('en')" data-lang="english">english</a>
+                <a href="#" onclick="changeLanguage('de')" data-lang="german">deutsch</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="textContent">
+        <h1 id="ifdTitle">Image File Directories (IFDs)</h1>
+        <h3 id="ifdStructureTitle"><u>IFD Structure</u></h3>
+        <p id="ifdStructureDescription">All Image File Directories follow the same basic structure, 
+            of a 2-byte count of the number of directory entries (i.e., the number of fields), 
+            followed by a sequence of 12-byte field entries, followed by a 4-byte offset of the next IFD (or 0 if none).
+            <br>Each 12-byte IFD entry has the following format:
+        </p>
+        <ul>
+            <li id="tagEntry">0-1 Bytes: The Tag that identifies the field.</li>
+            <li id="typeEntry">2-3 Bytes: The field Type.</li>
+            <li id="valueCountEntry">4-7 Bytes: The number of values, Count of the indicated Type.</li>
+            <li id="valueEntry">8-11 Bytes: The Value Offset, the file offset (in bytes) of the Value for the field.</li>
+        </ul>
+        <img style="width:50%" src="images/Aufbau Image File Directory (IFD) in TIFF-Datei.png">
+        <img style="width:50%" src="images/IFD Eintrag bzw Tag eines TIFFs.png">
+        <br>
+        <br>
+        <h3 id="ifd0Title"><u>IFD #0 Data</u></h3>
+        <p id="ifd0Description">In the first IFD of a DNG file, metadata information about the digital image captured by the camera is included. 
+            The metadata comprises various tags that relate to the image. 
+            These tags represent only a portion of the metadata that can exist in the first IFD of a DNG file. 
+            The specific tags and their values can vary depending on the camera and the settings used during the capture. 
+            The DNG format is designed to be extensible, accommodating a wide range of metadata information from different cameras.<br>
+            However, IFD #0 not only contains data about the associated image but also the EXIF (Exchangeable image file format) Sub-IFD and the MakerNote Sub-IFD. 
+            The EXIF-Sub-IFD includes additional information about the camera and the image according to the EXIF specification, 
+            such as exposure time (0x829a) and light intensity (0x829d). 
+            An entry in the EXIF-Sub-IFD also points to the offset of the MakerNote Sub-IFD. 
+            MakerNote is a manufacturer-specific part of the EXIF standard that gives manufacturers the freedom to store arbitrary data. 
+            It is important to note that DNG itself generally does not contain manufacturer-specific MakerNote data. 
+            The MakerNote is a section in the EXIF metadata that allows camera manufacturers to insert additional, 
+            camera-related information.
+            As DNG is conceived as a universal format, it typically excludes manufacturer-specific MakerNote data. 
+            Instead, DNG aims to capture essential image data in a standardized form. DNG uses the MakerNoteSafety tag to verify whether it is safe to retain the MakerNote tag along with the rest of the EXIF data.
+
+        </p>
+        <div class="navButtonsContainer">
+            <a href="Dng.html" class="navButtonPrev" id="prevButton">Previous</a>
+        </div>
+    </div>
+
+</body>
+
+</html>

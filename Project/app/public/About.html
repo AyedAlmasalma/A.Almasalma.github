@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/logo.png">
+    <title>DNG Decoder</title>
+    <link rel="stylesheet" href="baseStyle.css">
+    <script>
+        var translations = {
+            "en": {
+                "aboutTitle": "About",
+                "dngDecoderTitle": "<u>DNG Decoder</u>",
+                "projectDescription": "DNG Decoder is a student project developed for the purposes of my Bachelor's thesis and also a bit due to general curiosity. The webpage and thesis were made in the period between end Juli and middle of December 2023. The whole project is based on the small amount of information about DNG that can be found on the internet, seeing as there is only one official public documentation from Adobe. It isn't perfect and there are things that are missing. That is why a lot of research and experimentation was necessary from my part in order to find the solutions to the problems. The project itself uses pure JavaScript and framework vue.js for the whole decoding and processing. Overall I am very happy with the results of the project but there are always things that can be improved. There are some plans to update it later as a side project but for proper evaluation of the whole project there are no foreseen update until I have been graded on it and have graduated. The source code of the decoder can be found on GitHub using this link DNG Decoder.",
+                "header": {
+                    "Home": "Home",
+                    "Dng": "DNG",
+                    "Intro": "Intro",
+                    "IFDs": "IFDs",
+                    "Tutorial": "Tutorial",
+                    "About": "About",
+                    "Language": "Language",
+                    "english": "english",
+                    "german": "german"
+                },
+            },
+            "de": {
+                "aboutTitle": "Über uns",
+                "dngDecoderTitle": "<u>DNG Decoder</u>",
+                "projectDescription": "Der DNG Decoder ist ein Studentenprojekt, das für meine Bachelorarbeit entwickelt wurde und auch ein wenig aus allgemeinem Interesse resultierte. Die Webseite und die Thesis wurden im Zeitraum zwischen Ende Juli und Mitte Dezember 2023 erstellt. Das gesamte Projekt basiert auf der geringen Menge an Informationen über DNG, die im Internet verfügbar sind, da es nur eine offizielle öffentliche Dokumentation von Adobe gibt. Es ist nicht perfekt, und es fehlen einige Dinge. Deshalb war von meiner Seite aus viel Forschung und Experimentieren notwendig, um Lösungen für die Probleme zu finden. Das Projekt selbst verwendet reines JavaScript und das Vue.js-Framework für die gesamte Dekodierung und Verarbeitung. Insgesamt bin ich sehr zufrieden mit den Ergebnissen des Projekts, aber es gibt immer Dinge, die verbessert werden können. Es gibt einige Pläne, es später als Nebenprojekt zu aktualisieren, aber für eine angemessene Bewertung des gesamten Projekts sind bis zu meiner Benotung und meinem Abschluss keine Updates geplant. Der Quellcode des Decoders kann über diesen Link auf GitHub gefunden werden: DNG Decoder.",
+                "header": {
+                    "Home": "Startseite",
+                    "Dng": "DNG",
+                    "Intro": "Einführung",
+                    "IFDs": "IFDs",
+                    "Tutorial": "Tutorial",
+                    "About": "Über uns",
+                    "Language": "Sprache",
+                    "english": "englisch",
+                    "german": "deutsch"
+                },
+            }
+        };
+
+        function changeLanguage(lang) {
+            document.getElementById("aboutTitle").textContent = translations[lang]["aboutTitle"];
+            document.getElementById("dngDecoderTitle").innerHTML = translations[lang]["dngDecoderTitle"];
+            document.getElementById("projectDescription").textContent = translations[lang]["projectDescription"];
+           
+
+            // Update header content
+            var headerElements = document.querySelectorAll('[data-lang]');
+            headerElements.forEach(function (element) {
+                var key = element.getAttribute('data-lang');
+                var translation = translations[lang]["header"][key];
+                if (translation) {
+                    element.textContent = translation;
+                }
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div class="header">
+        <a href="../index.html" data-lang="Home">Home</a>
+        <div class="dropdown">
+            <a href="Dng.html" data-lang="DNG">DNG</a>
+            <div class="dropdownContent">
+                <a href="Dng.html" data-lang="Intro">Introdution</a>
+                <a href="ifds.html" data-lang="IFDs">IFDs</a>
+            </div>
+        </div>
+        <a href="tutorial.html" data-lang="Tutorial">Tutorial</a>
+        <a href="About.html" data-lang="About">About</a>
+        <div class="dropdown">
+            <a href="language" data-lang="Language">Language</a>
+            <div class="dropdownContent">
+                <a href="#" onclick="changeLanguage('en')" data-lang="english">english</a>
+                <a href="#" onclick="changeLanguage('de')" data-lang="german">deutsch</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="textContent">
+        <h1 id="aboutTitle">About</h1>
+        <h3 id="dngDecoderTitle"><u>DNG Decoder</u></h3>
+        <p id="projectDescription">
+            DNG Decoder is a student project developed for the purposes of my Bachelor's thesis and also a bit due to general curiosity. 
+            The webpage and thesis were made in the period between end Juli and middle of December 2023. 
+            The whole project is based on the small amount of information about DNG that can be found on the internet, 
+            seeing as there is only one official public documentation from Adobe. 
+            It isn't perfect and there are things that are missing. 
+            That is why a lot of research and experimentation was necessary from my part in order to find the solutions to the problems. 
+            The project itself uses pure JavaScript and framework vue.js for the whole decoding and processing. 
+            Overall I am very happy with the results of the project but there are always things that can be improved. 
+            There are some plans to update it later as a side project but for proper evaluation of the whole project there are no foreseen update until I have been graded on it and have graduated. 
+            The source code of the decoder can be found on GitHub using this link this link <a href="https://github.com/AyedAlmasalma/A.Almasalma.github"> DNG Decoder</a>.
+        </p>
+
+        <br>
+        <br>
+        <br>
+    </div>
+
+</body>
+
+</html>
